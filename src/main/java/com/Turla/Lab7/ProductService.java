@@ -13,27 +13,22 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ProductService {
 
     private final Map<Long, Product> productDatabase = new HashMap<>();
-    private final AtomicLong idCounter = new AtomicLong(3); // Starting after initial mock data
+    private final AtomicLong idCounter = new AtomicLong(3);
 
-    // Initialize with mock data
     public ProductService() {
-        // Pre-populate with some products
         productDatabase.put(1L, new Product(1L, "Laptop Pro", 1299.99));
         productDatabase.put(2L, new Product(2L, "Wireless Mouse", 29.99));
         productDatabase.put(3L, new Product(3L, "Mechanical Keyboard", 89.99));
     }
 
-    // GET ALL
     public List<Product> getAllProducts() {
         return new ArrayList<>(productDatabase.values());
     }
 
-    // GET BY ID
     public Product getProductById(Long id) {
         return productDatabase.get(id);
     }
 
-    // CREATE
     public Product createProduct(Product product) {
         Long newId = idCounter.incrementAndGet();
         product.setId(newId);
@@ -41,22 +36,19 @@ public class ProductService {
         return product;
     }
 
-    // UPDATE
     public Product updateProduct(Long id, Product product) {
         if (productDatabase.containsKey(id)) {
             product.setId(id);
             productDatabase.put(id, product);
             return product;
         }
-        return null; // Product not found
+        return null;
     }
 
-    // DELETE
     public boolean deleteProduct(Long id) {
         return productDatabase.remove(id) != null;
     }
 
-    // Check if product exists
     public boolean productExists(Long id) {
         return productDatabase.containsKey(id);
     }
